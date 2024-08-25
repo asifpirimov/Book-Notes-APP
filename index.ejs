@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <title>Book Review App</title>
+</head>
+<body>
+    <header>
+        <h1>Book Review App</h1>
+    </header>
+    
+    <main>
+        <section id="book-list">
+            <% books.forEach(book => { %>
+                <div class="book">
+                    <img src="<%= book.cover_url %>" alt="<%= book.title %> cover">
+                    <h2><%= book.title %></h2>
+                    <p>Author: <%= book.author %></p>
+                    <p>Rating: <%= book.rating %>/5</p>
+                    <p>Read on: <%= book.read_date %></p>
+                    <p><%= book.notes %></p>
+                    
+                    <form action="/update/<%= book.id %>" method="post">
+                        <input type="text" name="title" value="<%= book.title %>" required>
+                        <input type="text" name="author" value="<%= book.author %>" required>
+                        <textarea name="notes"><%= book.notes %></textarea>
+                        <input type="number" name="rating" value="<%= book.rating %>" min="1" max="5" required>
+                        <input type="date" name="read_date" value="<%= book.read_date %>" required>
+                        <button type="submit">Update</button>
+                    </form>
+                    <form action="/delete/<%= book.id %>" method="post">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+            <% }) %>
+        </section>
+
+        <section id="add-book">
+            <h2>Add a New Book</h2>
+            <form action="/add" method="post">
+                <input type="text" name="title" placeholder="Title" required>
+                <input type="text" name="author" placeholder="Author" required>
+                <textarea name="notes" placeholder="Notes"></textarea>
+                <input type="number" name="rating" placeholder="Rating (1-5)" min="1" max="5" required>
+                <input type="date" name="read_date" placeholder="Read Date" required>
+                <button type="submit">Add Book</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Book Review App</p>
+    </footer>
+</body>
+</html>
